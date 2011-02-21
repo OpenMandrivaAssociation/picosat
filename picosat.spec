@@ -20,7 +20,7 @@ Source3:        picomus.1
 # two distinct binaries, one with trace support and one without.
 Patch0:         picosat-trace.patch
 
-Group:          Science/Computer science
+Group:          Sciences/Computer science
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 License:        MIT-like
 # gzip required (see app.c); find-requires can't see into C code to find it
