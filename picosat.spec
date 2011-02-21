@@ -2,7 +2,7 @@
 
 %define name    picosat
 %define version 936
-%define release %mkrel 0
+%define release %mkrel 1
 
 Name:           %{name}
 Summary:        Lightweight SAT solver
@@ -33,7 +33,7 @@ conjunctive normal form (CNF). General information on SAT can be
 found at http://www.satlive.org or http://www.satlib.org.
 
 %package libs
-Group:          Development/Libraries
+Group:          Development/C
 Summary:        A SAT solver library
 
 %description libs
@@ -42,7 +42,7 @@ The library has a simple API which is similar to that of previous
 solvers by the same authors.
 
 %package devel
-Group:          Development/Libraries
+Group:          Development/C
 Summary:        Development files for PicoSAT
 Requires:       %{name}-libs = %{version}-%{release}
 
