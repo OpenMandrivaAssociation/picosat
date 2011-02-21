@@ -2,8 +2,9 @@
 
 %define name    picosat
 %define version 936
-%define release %mkrel 2
-%define	libname %mklibname %{name} %{version}
+%define major	0
+%define release %mkrel 3
+%define	libname %mklibname %{name} %{major}
 %define	libnamedevel %mklibname %{name} -d
 
 Name:           %{name}
@@ -43,12 +44,12 @@ The PicoSAT library, which contains routines that solve the SAT problem.
 The library has a simple API which is similar to that of previous
 solvers by the same authors.
 
-%package -n	devel
+%package -n	%{name}-devel
 Group:          Development/C
 Summary:        Development files for PicoSAT
-Requires:       %{name}-libs = %{version}-%{release}
+Requires:       %{libname} = %{version}-%{release}
 
-%description -n	devel
+%description -n	%{name}-devel
 Headers and other development files for PicoSAT.
 
 %prep
@@ -61,7 +62,7 @@ Headers and other development files for PicoSAT.
 # Build the version with trace support
 sed -e "s/@CC@/gcc/" \
     -e "s/@CFLAGS@/${RPM_OPT_FLAGS} -DTRACE -DNDEBUG -fPIC/" \
-    -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.0/" \
+    -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.%{major}/" \
     -e "s/libpicosat/libpicosat-trace/g" \
     -e "s/-lpicosat/-lpicosat-trace/g" \
     -e "s/@TARGETS@/libpicosat-trace.so picosat picomus/" \
@@ -74,7 +75,7 @@ mv picosat picosat.trace
 rm -f *.o *.s config.h
 sed -e "s/@CC@/gcc/" \
     -e "s/@CFLAGS@/${RPM_OPT_FLAGS} -DNDEBUG -fPIC/" \
-    -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.0/" \
+    -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.%{major}/" \
     -e "s/@TARGETS@/libpicosat.so picosat/" \
   makefile.in > makefile
 make
@@ -87,12 +88,12 @@ cp -p picosat.h $RPM_BUILD_ROOT%{_includedir}
 
 # Install the libraries
 mkdir -p $RPM_BUILD_ROOT%{_libdir}
-cp -p libpicosat-trace.so $RPM_BUILD_ROOT%{_libdir}/libpicosat-trace.so.0.0.%{version}
-ln -s libpicosat-trace.so.0.0.%{version} $RPM_BUILD_ROOT%{_libdir}/libpicosat-trace.so.0
-ln -s libpicosat-trace.so.0 $RPM_BUILD_ROOT%{_libdir}/libpicosat-trace.so
-cp -p libpicosat.so $RPM_BUILD_ROOT%{_libdir}/libpicosat.so.0.0.%{version}
-ln -s libpicosat.so.0.0.%{version} $RPM_BUILD_ROOT%{_libdir}/libpicosat.so.0
-ln -s libpicosat.so.0 $RPM_BUILD_ROOT%{_libdir}/libpicosat.so
+cp -p libpicosat-trace.so $RPM_BUILD_ROOT%{_libdir}/libpicosat-trace.so.%{major}.0.%{version}
+ln -s libpicosat-trace.so.%{major}.0.%{version} $RPM_BUILD_ROOT%{_libdir}/libpicosat-trace.so.%{major}
+ln -s libpicosat-trace.so.%{major} $RPM_BUILD_ROOT%{_libdir}/libpicosat-trace.so
+cp -p libpicosat.so $RPM_BUILD_ROOT%{_libdir}/libpicosat.so.%{major}.0.%{version}
+ln -s libpicosat.so.%{major}.0.%{version} $RPM_BUILD_ROOT%{_libdir}/libpicosat.so.%{major}
+ln -s libpicosat.so.%{major} $RPM_BUILD_ROOT%{_libdir}/libpicosat.so
 
 # Install the binaries
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -124,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libpicosat-trace.so.*
 %{_libdir}/libpicosat.so.*
 
-%files -n devel
+%files -n %{name}-devel
 %defattr(-,root,root,-)
 %{_includedir}/picosat.h
 %{_libdir}/libpicosat-trace.so
