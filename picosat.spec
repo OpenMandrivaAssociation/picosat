@@ -64,7 +64,7 @@ sed -e "s/@CC@/gcc/" \
     -e "s/-lpicosat/-lpicosat-trace/g" \
     -e "s/@TARGETS@/libpicosat-trace.so picosat picomus/" \
   makefile.in > makefile
-make %{?_smp_mflags}
+make
 mv picosat picosat.trace
 
 # Build the fast version.
@@ -75,7 +75,7 @@ sed -e "s/@CC@/gcc/" \
     -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.0/" \
     -e "s/@TARGETS@/libpicosat.so picosat/" \
   makefile.in > makefile
-make %{?_smp_mflags}
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
