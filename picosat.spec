@@ -27,7 +27,7 @@ Group:          Sciences/Computer science
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 License:        MIT-like
 # gzip required (see app.c); find-requires can't see into C code to find it
-Requires:       gzip, %{name}-libs = %{version}-%{release}
+Requires:       gzip, %{libname} = %{version}-%{release}
 
 %description
 The SAT problem is the classical NP complete problem of searching
