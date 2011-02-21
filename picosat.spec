@@ -2,7 +2,9 @@
 
 %define name    picosat
 %define version 936
-%define release %mkrel 1
+%define release %mkrel 2
+%define	libname %mklibname %{name} %{version}
+%define	libnamedevel %mklibname %{name} -d
 
 Name:           %{name}
 Summary:        Lightweight SAT solver
@@ -32,21 +34,21 @@ for a satisfying assignment of a propositional formula in
 conjunctive normal form (CNF). General information on SAT can be
 found at http://www.satlive.org or http://www.satlib.org.
 
-%package libs
+%package -n	%{libname}
 Group:          Development/C
 Summary:        A SAT solver library
 
-%description libs
+%description -n	%{libname}
 The PicoSAT library, which contains routines that solve the SAT problem.
 The library has a simple API which is similar to that of previous
 solvers by the same authors.
 
-%package devel
+%package -n	devel
 Group:          Development/C
 Summary:        Development files for PicoSAT
 Requires:       %{name}-libs = %{version}-%{release}
 
-%description devel
+%description -n	devel
 Headers and other development files for PicoSAT.
 
 %prep
@@ -100,9 +102,8 @@ cp -p picosat picosat.trace picomus $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/man1
 
-%post libs -p /sbin/ldconfig
-
-%postun libs -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -117,13 +118,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/picosat*
 %{_mandir}/man1/picomus*
 
-%files libs
+%files -n %{libname}
 %defattr(-,root,root,-)
 %doc LICENSE NEWS
 %{_libdir}/libpicosat-trace.so.*
 %{_libdir}/libpicosat.so.*
 
-%files devel
+%files -n devel
 %defattr(-,root,root,-)
 %{_includedir}/picosat.h
 %{_libdir}/libpicosat-trace.so
