@@ -2,8 +2,8 @@
 
 %define name    picosat
 %define version 936
-%define major	0
-%define release %mkrel 3
+%define major	1
+%define release %mkrel 4
 %define	libname %mklibname %{name} %{major}
 %define	libnamedevel %mklibname %{name} -d
 
@@ -83,8 +83,8 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 # Install the header file
-mkdir -p $RPM_BUILD_ROOT%{_includedir}
-cp -p picosat.h $RPM_BUILD_ROOT%{_includedir}
+mkdir -p $RPM_BUILD_ROOT%{_includedir}/%{name}
+cp -p picosat.h $RPM_BUILD_ROOT%{_includedir}/%{name}
 
 # Install the libraries
 mkdir -p $RPM_BUILD_ROOT%{_libdir}
@@ -127,6 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{name}-devel
 %defattr(-,root,root,-)
-%{_includedir}/picosat.h
+%{_includedir}/%{name}/picosat.h
 %{_libdir}/libpicosat-trace.so
 %{_libdir}/libpicosat.so
