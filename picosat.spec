@@ -3,7 +3,7 @@
 %define name    picosat
 %define version 936
 %define major	1
-%define release %mkrel 4
+%define release %mkrel 5
 %define	libname %mklibname %{name} %{major}
 %define	libnamedevel %mklibname %{name} -d
 
@@ -54,6 +54,7 @@ Headers and other development files for PicoSAT.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 # The configure script is NOT autoconf-generated and chooses its own CFLAGS,
@@ -61,7 +62,7 @@ Headers and other development files for PicoSAT.
 
 # Build the version with trace support
 sed -e "s/@CC@/gcc/" \
-    -e "s/@CFLAGS@/${RPM_OPT_FLAGS} -DTRACE -DNDEBUG -fPIC/" \
+    -e "s/@CFLAGS@/${RPM_OPT_FLAGS} -DTRACE -DNDEBUG/" \
     -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.%{major}/" \
     -e "s/libpicosat/libpicosat-trace/g" \
     -e "s/-lpicosat/-lpicosat-trace/g" \
@@ -74,7 +75,7 @@ mv picosat picosat.trace
 # Note that picomus needs trace support, so we don't rebuild it.
 rm -f *.o *.s config.h
 sed -e "s/@CC@/gcc/" \
-    -e "s/@CFLAGS@/${RPM_OPT_FLAGS} -DNDEBUG -fPIC/" \
+    -e "s/@CFLAGS@/${RPM_OPT_FLAGS} -DNDEBUG/" \
     -e "s/-Xlinker libpicosat.so/-Xlinker libpicosat.so.%{major}/" \
     -e "s/@TARGETS@/libpicosat.so picosat/" \
   makefile.in > makefile
