@@ -3,7 +3,7 @@
 %define name    picosat
 %define version 936
 %define major	1
-%define release %mkrel 5
+%define release %mkrel 6
 %define	libname %mklibname %{name} %{major}
 %define	libnamedevel %mklibname %{name} -d
 
