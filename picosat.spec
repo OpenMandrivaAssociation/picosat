@@ -131,3 +131,34 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/picosat.h
 %{_libdir}/libpicosat-trace.so
 %{_libdir}/libpicosat.so
+
+
+%changelog
+* Sun Feb 27 2011 Funda Wang <fwang@mandriva.org> 936-6mdv2011.0
++ Revision: 640458
+- rebuild to obsolete old packages
+
+* Tue Feb 22 2011 Alexandre Lissy <alissy@mandriva.com> 936-5
++ Revision: 639278
+- Fixing compilation issues and trace patch not being applied
+
+* Mon Feb 21 2011 Alexandre Lissy <alissy@mandriva.com> 936-4
++ Revision: 639143
+- fixes major to 1 (as debian)
+- fixing install directory of picosat.h as <picosat/picosat.h>
+
+* Mon Feb 21 2011 Alexandre Lissy <alissy@mandriva.com> 936-3
++ Revision: 639137
+- Fixes the dependency on library package
+- Fixing -devel package name
+- Using major for library version
+
+* Mon Feb 21 2011 Alexandre Lissy <alissy@mandriva.com> 936-2
++ Revision: 639126
+- Improving packaging for libraries using libname defines
+- Fixing the Group for -devel package
+- Fixing build issue with make -j
+- Fixing typo in RPM group
+- Adding picosat package.
+- Created package structure for picosat.
+
