@@ -10,7 +10,7 @@
 Name:           %{name}
 Summary:        Lightweight SAT solver
 Version:        %{version}
-Release:        %{release}
+Release:        %{release}1
 Source0:        http://fmv.jku.at/%{name}/%{name}-%{version}.tar.gz
 URL:            http://fmv.jku.at/picosat/
 # Thanks to David Wheeler for the man page.
