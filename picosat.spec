@@ -29,6 +29,7 @@ License:        MIT-like
 # gzip required (see app.c); find-requires can't see into C code to find it
 Requires:       gzip, %{libname} = %{version}-%{release}
 
+BuildRequires:	make
 %description
 The SAT problem is the classical NP complete problem of searching
 for a satisfying assignment of a propositional formula in
