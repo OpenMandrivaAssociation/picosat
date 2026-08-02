@@ -1,7 +1,7 @@
 # Mainly inspired from Fedora's .spec
 
 %define name    picosat
-%define version 936
+%define version 965
 %define major	1
 %define release 7
 %define	libname %mklibname %{name} %{major}
@@ -55,7 +55,7 @@ Headers and other development files for PicoSAT.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch -P 0 -p0
 
 %build
 # The configure script is NOT autoconf-generated and chooses its own CFLAGS,

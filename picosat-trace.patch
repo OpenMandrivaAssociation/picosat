@@ -1,19 +1,22 @@
---- makefile.in.orig	2010-08-04 06:20:44.000000000 -0600
-+++ makefile.in	2011-01-27 10:16:18.353728096 -0700
-@@ -8,10 +8,10 @@
- 	rm -f makefile config.h
- 	rm -f gmon.out *~ 
+--- makefile.in.orig
++++ makefile.in
+@@ -12,13 +12,13 @@
+ analyze:
+ 	clang --analyze $(CFLAGS) *.c *.h
  
 -picosat: libpicosat.a app.o main.o
 +picosat: libpicosat.so app.o main.o
  	$(CC) $(CFLAGS) -o $@ main.o app.o -L. -lpicosat
  
+ picomcs: libpicosat.a picomcs.o
+ 	$(CC) $(CFLAGS) -o $@ picomcs.o -L. -lpicosat
+ 
 -picomus: libpicosat.a picomus.o
 +picomus: libpicosat.so picomus.o
  	$(CC) $(CFLAGS) -o $@ picomus.o -L. -lpicosat
  
- app.o: app.c picosat.h makefile
-@@ -24,10 +24,10 @@
+ picogcnf: libpicosat.a picogcnf.o
+@@ -40,10 +40,10 @@
  	$(CC) $(CFLAGS) -c $<
  
  picosat.o: picosat.c picosat.h makefile
@@ -24,9 +27,9 @@
 -	$(CC) $(CFLAGS) -c $<
 +	$(CC) $(CFLAGS) -fPIC -c $<
  
- config.h: makefile VERSION mkconfig # and actually picosat.c
- 	rm -f $@; ./mkconfig > $@
-@@ -38,6 +38,6 @@
+ config.h: makefile VERSION mkconfig.sh # and actually picosat.c
+ 	rm -f $@; ./mkconfig.sh > $@
+@@ -54,6 +54,6 @@
  
  SONAME=-Xlinker -soname -Xlinker libpicosat.so
  libpicosat.so: picosat.o version.o
@@ -34,9 +37,9 @@
 +	$(CC) $(CFLAGS) -fPIC -shared -o $@ picosat.o version.o $(SONAME)
  
  .PHONY: all clean
---- picosat.c.orig	2010-08-04 06:20:44.000000000 -0600
-+++ picosat.c	2011-01-27 10:01:38.659957334 -0700
-@@ -6481,7 +6481,7 @@
+--- picosat.c.orig
++++ picosat.c
+@@ -6547,7 +6547,7 @@
    (void) file;
    (void) fmt;
    (void) f;
@@ -45,21 +48,21 @@
  #endif
  }
  
-@@ -6900,7 +6900,7 @@
-       leave ();
+@@ -7262,7 +7262,7 @@
+     return res;
    }
  #else
 -  ABORT ("compiled without trace support");
 +  ABORT ("compiled without trace support; please use picosat.trace instead");
+   return 0;
  #endif
- 
-   return res;
-@@ -6938,7 +6938,7 @@
-       leave ();
+ }
+@@ -7298,7 +7298,7 @@
+     return res;
    }
  #else
 -  ABORT ("compiled without trace support");
 +  ABORT ("compiled without trace support; please use picosat.trace instead");
+   return 0;
  #endif
- 
-   return res;
+ }
